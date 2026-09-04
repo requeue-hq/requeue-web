@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Requeue — Dead-letter inbox</title>
+  <meta name="description" content="Client-only Requeue dashboard. Paste a core API URL and key, then inspect and replay failed events.">
+  <meta name="theme-color" content="#0b0a09">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/dashboard.css">
+</head>
+<body class="dash-body">
+  <a class="skip" href="#inbox">Skip to inbox</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="index.html">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#141210"/>
+          <path d="M8 11h16M8 16h10M8 21h7" stroke="#e8a04a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M22.5 18.5a4 4 0 1 1-3.2-3.9" stroke="#3dd68c" stroke-width="2" stroke-linecap="round"/>
+          <path d="M19 13.2h3.4V16.6" stroke="#3dd68c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Requeue
+      </a>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+      <nav class="nav-links" id="nav-links" aria-label="Primary">
+        <a href="index.html">Waitlist</a>
+        <a href="https://github.com/requeue-hq/requeue" rel="noreferrer">Core API</a>
+        <a href="https://github.com/requeue-hq/requeue-sdk-js" rel="noreferrer">JS SDK</a>
+        <span class="nav-current">Inbox</span>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="dash">
+    <section class="wrap dash-intro">
+      <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Client-only · talks to your core API</p>
+      <h1>Dead-letter inbox</h1>
+      <p class="lede dash-lede">Paste a Requeue worker URL and API key. Credentials stay in this browser's localStorage — this page has no backend.</p>
+    </section>
+
+    <section class="wrap" aria-labelledby="connect-heading">
+      <form class="connect" id="connect-form">
+        <h2 class="connect-title" id="connect-heading">Connect</h2>
+        <label class="connect-field">
+          API base URL
+          <input id="base-url" name="baseUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="http://127.0.0.1:8787" required>
+        </label>
+        <label class="connect-field">
+          API key
+          <input id="api-key" name="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="rq_demo_local_dev_only_do_not_use_in_prod" required>
+        </label>
+        <div class="connect-actions">
+          <button class="btn btn-primary" type="submit" id="connect-btn">Connect</button>
+          <button class="btn btn-ghost" type="button" id="refresh-btn">Refresh</button>
+          <button class="btn btn-ghost" type="button" id="clear-btn">Clear</button>
+        </div>
+        <p class="connect-status" id="connect-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="wrap dash-shell" id="inbox">
+      <div class="inbox dash-inbox">
+        <div class="inbox-bar">
+          <div class="inbox-title">events</div>
+          <div class="dash-filters" role="tablist" aria-label="Event filter">
+            <button type="button" class="filter is-active" data-filter="inbox" aria-pressed="true">Inbox</button>
+            <button type="button" class="filter" data-filter="all" aria-pressed="false">All</button>
+          </div>
+          <div class="fail-count" id="event-count">Not connected</div>
+        </div>
+        <div id="event-list" class="event-list">
+          <p class="empty" id="event-empty">Connect to a running Requeue core API to list failed and pending events.</p>
+        </div>
+      </div>
+
+      <article class="detail" id="event-detail" aria-live="polite">
+        <div class="detail-empty" id="detail-empty">
+          <p class="section-kicker">Inspect</p>
+          <h2>Select an event</h2>
+          <p>Headers, payload, and replay attempts land here. One click re-delivers the stored payload to the endpoint's target URL.</p>
+        </div>
+        <div class="detail-body" id="detail-body" hidden></div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <span>© <span id="year">2026</span> Requeue · Maya Chen</span>
+      <span>
+        <a href="index.html">Waitlist</a>
+        ·
+        <a href="https://github.com/requeue-hq/requeue" rel="noreferrer">Core API</a>
+        ·
+        <a href="mailto:maya.chen.yvr@agentmail.to">maya.chen.yvr@agentmail.to</a>
+      </span>
+    </div>
+  </footer>
+  <script src="assets/dashboard.js"></script>
+</body>
+</html>
