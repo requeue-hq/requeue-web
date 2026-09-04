@@ -84,6 +84,11 @@
   min-height: 420px;
 }
 
+.dash-inbox .inbox-bar {
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
 .dash-filters {
   display: flex;
   gap: 6px;
@@ -114,7 +119,7 @@
 
 .dash-event {
   display: grid;
-  grid-template-columns: 12px 1fr auto;
+  grid-template-columns: 12px 1fr auto auto;
   gap: 12px;
   align-items: center;
   width: 100%;

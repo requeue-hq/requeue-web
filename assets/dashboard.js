@@ -88,8 +88,25 @@
   });
 
   eventList.addEventListener("click", function (event) {
+    var replayBtn = event.target.closest("[data-replay-id]");
+    if (replayBtn) {
+      var replayId = replayBtn.getAttribute("data-replay-id");
+      selectEvent(replayId).then(function () {
+        replayEvent(replayId);
+      });
+      return;
+    }
     var row = event.target.closest("[data-event-id]");
     if (!row) return;
+    selectEvent(row.getAttribute("data-event-id"));
+  });
+
+  eventList.addEventListener("keydown", function (event) {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    if (event.target.closest("[data-replay-id]")) return;
+    var row = event.target.closest("[data-event-id]");
+    if (!row) return;
+    event.preventDefault();
     selectEvent(row.getAttribute("data-event-id"));
   });
 
@@ -244,9 +261,9 @@
       .map(function (item) {
         var selected = item.id === state.selectedId ? " is-selected" : "";
         return (
-          "<button type=\"button\" class=\"dash-event" +
+          "<div class=\"dash-event" +
           selected +
-          "\" data-event-id=\"" +
+          "\" role=\"button\" tabindex=\"0\" data-event-id=\"" +
           escapeAttr(item.id) +
           "\">" +
           "<span class=\"dot\" aria-hidden=\"true\"></span>" +
@@ -259,7 +276,10 @@
           "</div>" +
           "</div>" +
           statusBadge(item.status) +
-          "</button>"
+          "<button class=\"replay\" type=\"button\" data-replay-id=\"" +
+          escapeAttr(item.id) +
+          "\">Replay</button>" +
+          "</div>"
         );
       })
       .join("");
