@@ -1,6 +1,13 @@
 # requeue-web
 
-Marketing waitlist site for [Requeue](https://github.com/requeue-hq) — catch failed webhooks & jobs, then replay them.
+Marketing waitlist site for [Requeue](https://github.com/requeue-hq/requeue) — catch failed webhooks & jobs, then replay them.
+
+Live:
+
+- Site: [https://getrequeue.com](https://getrequeue.com)
+- Hosted API: [https://api.getrequeue.com](https://api.getrequeue.com)
+- Core: [https://github.com/requeue-hq/requeue](https://github.com/requeue-hq/requeue)
+- JS SDK: [https://github.com/requeue-hq/requeue-sdk-js](https://github.com/requeue-hq/requeue-sdk-js)
 
 This repo is a static site. No build step, no paid form backend, no analytics, no dashboard server. The waitlist lives at `index.html`. A client-only inbox is at [`app.html`](app.html).
 
@@ -16,7 +23,7 @@ Then open [http://localhost:8080](http://localhost:8080) for the waitlist and [h
 
 ## Deploy on GitHub Pages (free)
 
-The site is meant to ship from `main` at the repository root. There is no `CNAME` file — leave custom domains unset unless you add one later.
+The site ships from `main` at the repository root. A [`CNAME`](CNAME) file pins the custom domain to **getrequeue.com**.
 
 1. Merge this site to `main`.
 2. On GitHub, open the repo **Settings**.
@@ -26,7 +33,8 @@ The site is meant to ship from `main` at the repository root. There is no `CNAME
    - **Branch:** `main`
    - **Folder:** `/ (root)`
 5. Click **Save**.
-6. Wait a minute, then open the Pages URL GitHub prints (typically `https://requeue-hq.github.io/requeue-web/`).
+6. Under **Custom domain**, keep `getrequeue.com` (the `CNAME` file). DNS for that host should stay pointed at GitHub Pages.
+7. Wait a minute, then open [https://getrequeue.com](https://getrequeue.com). The GitHub Pages URL (`https://requeue-hq.github.io/requeue-web/`) still works as a fallback.
 
 `.nojekyll` is included so GitHub Pages does not run Jekyll on the files.
 
@@ -36,7 +44,7 @@ The site is meant to ship from `main` at the repository root. There is no `CNAME
 
 Paste:
 
-- **API base URL** — local Wrangler or a hosted Worker
+- **API base URL** — hosted API (`https://api.getrequeue.com` by default), local Wrangler, or your own Worker
 - **API key** — sent as `Authorization: Bearer <key>`
 
 Both values are written to `localStorage` only (`requeue.dashboard.baseUrl`, `requeue.dashboard.apiKey`). They are never posted back to requeue-web.
@@ -48,9 +56,26 @@ The page then:
 3. Loads `GET /v1/events/:id` when you select a row
 4. Replays with `POST /v1/events/:id/replay`
 
+### Against the hosted API
+
+The live site at [https://getrequeue.com/app.html](https://getrequeue.com/app.html) defaults the API base URL to `https://api.getrequeue.com`.
+
+1. Open the inbox (hosted or local).
+2. Leave **API base URL** as `https://api.getrequeue.com`, or paste it if the field is empty.
+3. Paste your API key.
+4. Connect.
+
+Quick health check from a terminal:
+
+```bash
+curl https://api.getrequeue.com/health
+```
+
+The hosted Pages site is HTTPS, so the API URL must also be HTTPS. The Worker already sends CORS headers, so the browser can call it directly.
+
 ### Against local Wrangler
 
-Browsers block **HTTPS pages from calling HTTP APIs**. GitHub Pages cannot talk to `http://127.0.0.1:8787`. Serve this site locally instead.
+Browsers block **HTTPS pages from calling HTTP APIs**. [https://getrequeue.com/app.html](https://getrequeue.com/app.html) cannot talk to `http://127.0.0.1:8787`. Serve this site locally instead.
 
 In the [core repo](https://github.com/requeue-hq/requeue):
 
@@ -81,14 +106,14 @@ Open [http://localhost:8080/app.html](http://localhost:8080/app.html), then conn
 
 If the inbox is empty, create an endpoint and ingest a failure first (core README curl happy path, or the [JS SDK](https://github.com/requeue-hq/requeue-sdk-js)).
 
-### Against a hosted Worker
+### Against your own Worker
 
 1. Deploy the core API (`npm run deploy` in the core repo).
-2. Open `/app.html` locally or on GitHub Pages.
+2. Open `/app.html` locally or at [https://getrequeue.com/app.html](https://getrequeue.com/app.html).
 3. Paste the Worker URL (`https://….workers.dev` or your custom host) and your API key.
 4. Connect.
 
-The hosted Pages site is HTTPS, so the API URL must also be HTTPS. Rotate the seeded demo key before any shared deploy. The Worker already sends CORS headers, so the browser can call it directly.
+Rotate the seeded demo key before any shared deploy.
 
 ## Waitlist
 
@@ -98,5 +123,6 @@ The waitlist form opens the visitor's email client to [maya.chen.yvr@agentmail.t
 
 - Plain HTML, CSS, and small client-side scripts (`mailto` waitlist + `fetch` dashboard)
 - Google Fonts (Instrument Serif, IBM Plex Sans, IBM Plex Mono)
-- GitHub Pages from `main` / root
+- GitHub Pages from `main` / root, custom domain `getrequeue.com`
+- Hosted API at `https://api.getrequeue.com`
 - Dashboard credentials: browser `localStorage` only

@@ -36,7 +36,7 @@
         <a href="#how">How it works</a>
         <a href="#audience">Who it's for</a>
         <a href="app.html">Inbox</a>
-        <a href="https://github.com/requeue-hq" rel="noreferrer">GitHub</a>
+        <a href="https://github.com/requeue-hq/requeue" rel="noreferrer">GitHub</a>
         <a class="btn btn-primary" href="#waitlist">Join waitlist</a>
       </nav>
     </div>
@@ -51,11 +51,15 @@
           <p class="lede">Requeue is a dead-letter inbox for webhooks, crons, and workers. When something dies at 2am, it lands here — inspect the payload, fix the bug, one-click replay.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#waitlist">Get early access</a>
-            <a class="btn btn-ghost" href="https://github.com/requeue-hq" rel="noreferrer">View the org on GitHub</a>
+            <a class="btn btn-ghost" href="https://github.com/requeue-hq/requeue" rel="noreferrer">View the core on GitHub</a>
           </div>
           <div class="trust">
             <span>Self-host the OSS inbox</span>
-            <span>or use hosted when it ships</span>
+            <span>or call the hosted API at <a href="https://api.getrequeue.com/health" rel="noreferrer">api.getrequeue.com</a></span>
+          </div>
+          <div class="try-api">
+            <p class="try-api-label">Try the API</p>
+            <pre><code>curl https://api.getrequeue.com/health</code></pre>
           </div>
         </div>
         <aside class="inbox" aria-label="Example dead-letter inbox">
@@ -163,7 +167,7 @@
           <article class="step">
             <div class="step-num">01</div>
             <h3>Connect</h3>
-            <p>Install the JS SDK, forward a webhook URL, or run the open-source inbox beside your app.</p>
+            <p>Install the <a href="https://github.com/requeue-hq/requeue-sdk-js" rel="noreferrer">JS SDK</a>, forward a webhook URL, or run the <a href="https://github.com/requeue-hq/requeue" rel="noreferrer">open-source inbox</a> beside your app.</p>
           </article>
           <article class="step">
             <div class="step-num">02</div>
@@ -178,7 +182,7 @@
           <article class="step">
             <div class="step-num">04</div>
             <h3>Replay</h3>
-            <p>Re-send with one click — locally against the OSS build, or from the hosted inbox when it ships.</p>
+            <p>Re-send with one click — locally against the OSS build, or against the hosted API at api.getrequeue.com.</p>
           </article>
         </div>
       </div>
@@ -196,7 +200,7 @@
           </article>
           <article class="who">
             <h3>Small product teams</h3>
-            <p>Two to five people, a pile of webhooks, and no budget for a full incident platform. Self-host or wait for hosted.</p>
+            <p>Two to five people, a pile of webhooks, and no budget for a full incident platform. Self-host or use the hosted API.</p>
           </article>
           <article class="who">
             <h3>Anyone grepping logs at midnight</h3>
@@ -212,8 +216,8 @@
           <div>
             <p class="section-kicker">Waitlist</p>
             <h2>Be first when the inbox opens.</h2>
-            <p class="section-copy">Self-host when the OSS drops. Use hosted when it's ready. This form only opens your email client — no paid form SaaS, no tracking pixels.</p>
-            <p class="form-note">Maya Chen is building Requeue in the open at <a href="https://github.com/requeue-hq" rel="noreferrer">github.com/requeue-hq</a>.</p>
+            <p class="section-copy">The core is on GitHub and the hosted API is live at api.getrequeue.com. This form only opens your email client — no paid form SaaS, no tracking pixels.</p>
+            <p class="form-note">Maya Chen is building Requeue in the open at <a href="https://github.com/requeue-hq/requeue" rel="noreferrer">github.com/requeue-hq/requeue</a>.</p>
           </div>
           <form class="form" id="waitlist-form" action="mailto:maya.chen.yvr@agentmail.to" method="get">
             <label>
@@ -249,7 +253,9 @@
       <span>
         <a href="app.html">Inbox</a>
         ·
-        <a href="https://github.com/requeue-hq" rel="noreferrer">GitHub</a>
+        <a href="https://github.com/requeue-hq/requeue" rel="noreferrer">Core</a>
+        ·
+        <a href="https://api.getrequeue.com/health" rel="noreferrer">API</a>
         ·
         <a href="mailto:maya.chen.yvr@agentmail.to">maya.chen.yvr@agentmail.to</a>
       </span>
