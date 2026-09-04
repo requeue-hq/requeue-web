@@ -142,8 +142,8 @@
       if (!health || health.ok !== true) {
         throw apiError("health_failed", "GET /health did not return ok.");
       }
-      await loadEvents(creds);
       state.connected = true;
+      await loadEvents(creds);
       setStatus(
         "Connected to " +
           creds.baseUrl +
