@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Requeue — Catch failed webhooks &amp; jobs. Replay them.</title>
+  <meta name="description" content="Open-source and hosted dead-letter inbox for indie SaaS. Catch failed webhooks, crons, and workers — then inspect and replay them.">
+  <meta name="theme-color" content="#0b0a09">
+  <meta property="og:title" content="Requeue — Catch failed webhooks &amp; jobs. Replay them.">
+  <meta property="og:description" content="OSS + hosted dead-letter inbox for indie SaaS. Catch failures. Inspect the payload. One-click replay.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="#top">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#141210"/>
+          <path d="M8 11h16M8 16h10M8 21h7" stroke="#e8a04a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M22.5 18.5a4 4 0 1 1-3.2-3.9" stroke="#3dd68c" stroke-width="2" stroke-linecap="round"/>
+          <path d="M19 13.2h3.4V16.6" stroke="#3dd68c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Requeue
+      </a>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+      <nav class="nav-links" id="nav-links" aria-label="Primary">
+        <a href="#problem">Problem</a>
+        <a href="#solution">Solution</a>
+        <a href="#how">How it works</a>
+        <a href="#audience">Who it's for</a>
+        <a href="https://github.com/requeue-hq" rel="noreferrer">GitHub</a>
+        <a class="btn btn-primary" href="#waitlist">Join waitlist</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" id="top">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Open source · Hosted for indie SaaS</p>
+          <h1>Catch failed webhooks &amp; jobs. Replay them.</h1>
+          <p class="lede">Requeue is a dead-letter inbox for webhooks, crons, and workers. When something dies at 2am, it lands here — inspect the payload, fix the bug, one-click replay.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#waitlist">Get early access</a>
+            <a class="btn btn-ghost" href="https://github.com/requeue-hq" rel="noreferrer">View the org on GitHub</a>
+          </div>
+          <div class="trust">
+            <span>Self-host the OSS inbox</span>
+            <span>or use hosted when it ships</span>
+          </div>
+        </div>
+        <aside class="inbox" aria-label="Example dead-letter inbox">
+          <div class="inbox-bar">
+            <div class="inbox-title">dead-letter inbox</div>
+            <div class="fail-count">3 failed</div>
+          </div>
+          <div class="event">
+            <span class="dot" aria-hidden="true"></span>
+            <div>
+              <div class="event-name">stripe.invoice.paid</div>
+              <div class="event-meta">webhook · 2m ago</div>
+            </div>
+            <span class="status status-fail">502</span>
+            <button class="replay" type="button" tabindex="-1">Replay</button>
+          </div>
+          <div class="event">
+            <span class="dot" aria-hidden="true"></span>
+            <div>
+              <div class="event-name">cron.daily-digest</div>
+              <div class="event-meta">cron · 18m ago</div>
+            </div>
+            <span class="status status-fail">timeout</span>
+            <button class="replay" type="button" tabindex="-1">Replay</button>
+          </div>
+          <div class="event">
+            <span class="dot" aria-hidden="true"></span>
+            <div>
+              <div class="event-name">worker.email-send</div>
+              <div class="event-meta">worker · 1h ago</div>
+            </div>
+            <span class="status status-fail">ECONN</span>
+            <button class="replay" type="button" tabindex="-1">Replay</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section problem" id="problem">
+      <div class="wrap">
+        <p class="section-kicker">The problem</p>
+        <h2>Failures go quiet. Customers don't.</h2>
+        <p class="section-copy">Retries exhaust. Logs rotate. The Stripe event that 500'd is gone by the time someone mentions their invoice never updated.</p>
+        <div class="problem-list">
+          <article class="problem-item">
+            <strong>Webhooks vanish after three retries</strong>
+            <p>Stripe, Clerk, Resend — they try a few times, then stop. You find out from a support thread, not a dashboard.</p>
+          </article>
+          <article class="problem-item">
+            <strong>Crons fail and leave no corpse</strong>
+            <p>A nightly job times out. The next run overwrites the log. Context is gone before you open the laptop.</p>
+          </article>
+          <article class="problem-item">
+            <strong>Workers retry into /dev/null</strong>
+            <p>Queue libraries retry, then drop. The payload that would let you replay lives nowhere you can click.</p>
+          </article>
+          <article class="problem-item">
+            <strong>You are not a platform team</strong>
+            <p>Indie SaaS doesn't have an on-call rotation or a dead-letter service. You need an inbox, not another pager.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="solution">
+      <div class="wrap">
+        <p class="section-kicker">The solution</p>
+        <h2>Catch. Inspect. Replay.</h2>
+        <p class="section-copy">One inbox for every failed delivery. Open source if you want to self-host. Hosted if you want Maya to keep the lights on.</p>
+        <div class="cards">
+          <article class="card">
+            <svg class="icon" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <rect x="6" y="8" width="24" height="20" rx="4" stroke="currentColor" stroke-width="2"/>
+              <path d="M10 14h16M10 19h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h3>Catch</h3>
+            <p>Failed webhooks, cron runs, and worker jobs land in one dead-letter inbox. Nothing silent. Nothing lost after the last retry.</p>
+          </article>
+          <article class="card">
+            <svg class="icon" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <circle cx="16" cy="16" r="8" stroke="currentColor" stroke-width="2"/>
+              <path d="M22 22l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h3>Inspect</h3>
+            <p>Headers, payload, stack, attempt count — the full corpse, not a one-line CloudWatch snippet. See why it died before you touch prod.</p>
+          </article>
+          <article class="card">
+            <svg class="icon" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <path d="M25 14a8 8 0 1 0 2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M21 10h6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3>Replay</h3>
+            <p>One click to re-deliver the same payload through your new code. Or edit the body and retry. That's the whole product.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="wrap">
+        <p class="section-kicker">How it works</p>
+        <h2>From failure to replay in four steps.</h2>
+        <p class="section-copy">Point webhooks at Requeue, wrap jobs with the SDK, or drop the OSS inbox next to your stack.</p>
+        <div class="steps">
+          <article class="step">
+            <div class="step-num">01</div>
+            <h3>Connect</h3>
+            <p>Install the JS SDK, forward a webhook URL, or run the open-source inbox beside your app.</p>
+          </article>
+          <article class="step">
+            <div class="step-num">02</div>
+            <h3>Fail as usual</h3>
+            <p>When a delivery 500s, times out, or a worker gives up, Requeue keeps the event instead of dropping it.</p>
+          </article>
+          <article class="step">
+            <div class="step-num">03</div>
+            <h3>Read the inbox</h3>
+            <p>Open the dead letter, read the body, see the status. Fix the handler. No log archaeology required.</p>
+          </article>
+          <article class="step">
+            <div class="step-num">04</div>
+            <h3>Replay</h3>
+            <p>Re-send with one click — locally against the OSS build, or from the hosted inbox when it ships.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="audience">
+      <div class="wrap">
+        <p class="section-kicker">Who it's for</p>
+        <h2>Indie SaaS, not enterprise ops.</h2>
+        <p class="section-copy">Built for people who ship the product and also get paged by it.</p>
+        <div class="audience">
+          <article class="who">
+            <h3>Solo founders</h3>
+            <p>You wired Stripe last Tuesday. You don't have a reliability squad. You need failures to wait in an inbox until morning.</p>
+          </article>
+          <article class="who">
+            <h3>Small product teams</h3>
+            <p>Two to five people, a pile of webhooks, and no budget for a full incident platform. Self-host or wait for hosted.</p>
+          </article>
+          <article class="who">
+            <h3>Anyone grepping logs at midnight</h3>
+            <p>If you've reconstructed a missing Clerk webhook from memory, Requeue is for you.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section waitlist" id="waitlist">
+      <div class="wrap">
+        <div class="waitlist-panel">
+          <div>
+            <p class="section-kicker">Waitlist</p>
+            <h2>Be first when the inbox opens.</h2>
+            <p class="section-copy">Self-host when the OSS drops. Use hosted when it's ready. This form only opens your email client — no paid form SaaS, no tracking pixels.</p>
+            <p class="form-note">Maya Chen is building Requeue in the open at <a href="https://github.com/requeue-hq" rel="noreferrer">github.com/requeue-hq</a>.</p>
+          </div>
+          <form class="form" id="waitlist-form" action="mailto:maya.chen.yvr@agentmail.to" method="get">
+            <label>
+              Email
+              <input type="email" name="email" autocomplete="email" required placeholder="you@indie.dev">
+            </label>
+            <label>
+              What are you shipping?
+              <input type="text" name="product" autocomplete="organization" placeholder="A billing app, a newsletter tool…">
+            </label>
+            <label>
+              Where do things fail today?
+              <select name="source">
+                <option value="" selected>Pick one</option>
+                <option value="webhooks">Webhooks</option>
+                <option value="crons">Crons</option>
+                <option value="workers">Workers / queues</option>
+                <option value="all">All of the above</option>
+              </select>
+            </label>
+            <button class="btn btn-primary" type="submit">Email Maya to join</button>
+            <p class="form-note">Or write <a href="mailto:maya.chen.yvr@agentmail.to?subject=Requeue%20waitlist">maya.chen.yvr@agentmail.to</a> directly.</p>
+            <p class="form-status" id="waitlist-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <span>© <span id="year">2026</span> Requeue · Maya Chen</span>
+      <span>
+        <a href="https://github.com/requeue-hq" rel="noreferrer">GitHub</a>
+        ·
+        <a href="mailto:maya.chen.yvr@agentmail.to">maya.chen.yvr@agentmail.to</a>
+      </span>
+    </div>
+  </footer>
+  <script src="assets/app.js"></script>
+</body>
+</html>
