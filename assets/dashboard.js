@@ -2,7 +2,7 @@
   var STORAGE_BASE = "requeue.dashboard.baseUrl";
   var STORAGE_KEY = "requeue.dashboard.apiKey";
   var DEMO_KEY = "rq_demo_local_dev_only_do_not_use_in_prod";
-  var DEFAULT_BASE = "http://127.0.0.1:8787";
+  var DEFAULT_BASE = "https://api.getrequeue.com";
   var INBOX_STATUSES = { failed: true, pending_replay: true };
 
   var form = document.getElementById("connect-form");
@@ -142,8 +142,8 @@
       if (!health || health.ok !== true) {
         throw apiError("health_failed", "GET /health did not return ok.");
       }
-      await loadEvents(creds);
       state.connected = true;
+      await loadEvents(creds);
       setStatus(
         "Connected to " +
           creds.baseUrl +
@@ -488,7 +488,7 @@
   function warnMixedContent(baseUrl) {
     if (window.location.protocol === "https:" && /^http:\/\//i.test(baseUrl)) {
       setStatus(
-        "This page is HTTPS. Browsers block HTTP APIs (including local Wrangler). Serve the dashboard over HTTP locally, or use a hosted HTTPS worker URL.",
+        "This page is HTTPS. Browsers block HTTP APIs (including local Wrangler). Serve the dashboard over HTTP locally, or use https://api.getrequeue.com.",
         "warn"
       );
     }

@@ -243,6 +243,43 @@ h3 {
   font-size: 13px;
 }
 
+.trust a {
+  color: var(--muted);
+}
+
+.try-api {
+  margin-top: 22px;
+}
+
+.try-api-label {
+  margin: 0 0 8px;
+  color: var(--copper);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.try-api pre {
+  margin: 0;
+  max-width: 36rem;
+  padding: 12px 14px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.try-api code {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.step a {
+  color: var(--ink);
+}
+
 .inbox {
   background: linear-gradient(180deg, #1c1916, #12100e);
   border: 1px solid var(--line);
